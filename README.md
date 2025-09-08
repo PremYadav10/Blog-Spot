@@ -1,7 +1,5 @@
 # BlogSpot: A Full-Stack Blogging Platform 📝
 
-![Project Banner](https://via.placeholder.com/1200x400.png/007bff/ffffff?text=Full-Stack+Blogging+Platform)
-
 ## 🚀 Project Overview
 
 This is a dynamic, full-stack blogging platform built for creating, reading, updating, and deleting blog posts. The application provides a secure and personalized experience, allowing users to manage their own content through a dedicated dashboard. It showcases a modern, responsive UI and demonstrates proficiency in integrating front-end frameworks with a powerful backend-as-a-service.
@@ -66,3 +64,4 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 ---
 _This project was built as a demonstration of full-stack development skills using modern web technologies._
+
