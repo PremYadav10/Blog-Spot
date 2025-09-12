@@ -5,7 +5,7 @@ import authservice from './appwrite/auth'
 import {useDispatch} from 'react-redux'
 import {login,logout} from './store/authSlice'
 import { Footer, Header } from './components';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
       }
       else{
         dispatch(logout())
+        Navigate("/login");
       }
     })
     .finally(()=>setLoading(false))
