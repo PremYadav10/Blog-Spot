@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import appwriteService from '../appwrite/config'
 import { Container, PostCard } from '../components/index'
 import { Link } from 'react-router-dom'
@@ -116,24 +116,31 @@ function Home() {
   // --- If posts exist ---
  // --- Improved Latest Posts Section ---
 return (
-  <section className="w-full py-16 px-4 bg-gradient-to-br from-purple-800 via-blue-600 to-indigo-600 text-white">
-    <Container>
-      <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 text-center">
-        🌟 Latest Posts
-      </h2>
 
-      <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {posts.map((post) => (
-          <div
-            key={post.$id}
-            className="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-          >
-            <PostCard {...post} />
+  <Suspense fallback={<div>Loading...</div>}>
+      <section className="w-full py-16 px-4 bg-gradient-to-br from-purple-800 via-blue-600 to-indigo-600 text-white">
+        <Container>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 text-center">
+            🌟 Latest Posts
+          </h2>
+
+          <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {posts.map((post) => (
+              <div
+                key={post.$id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                <PostCard {...post} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </Container>
-  </section>
+        </Container>
+      </section>
+  </Suspense>
+
+
+
+
 );
 
 }

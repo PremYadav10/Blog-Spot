@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import conf from '../conf/conf.js';
 import { Client, Account, ID } from "appwrite";
 
@@ -52,10 +53,24 @@ export class AuthService {
 
         try {
             await this.account.deleteSessions();
+            Navigate("/login");
         } catch (error) {
             console.log("Appwrite serive :: logout :: error", error);
         }
     }
+
+
+     async getUserById(userId) {
+    try {
+        const user = await users.get(userId);
+        console.log('User found:', user);
+        return user;
+    } catch (error) {
+        console.error('Failed to get user:', error);
+        return null;
+    }
+}
+
 }
 
 const authService = new AuthService();

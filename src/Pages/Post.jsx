@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import parse from "html-react-parser";
 
 import appwriteService from "../appwrite/config";
+import { AuthService } from "../appwrite/auth";
 import { Button, Container } from "../components";
 
 export default function Post() {
@@ -19,6 +20,10 @@ export default function Post() {
     appwriteService.getPost(slug).then((post) => {
       if (post) setPost(post);
       else navigate("/");
+
+    // const user = AuthService.getUserById(post.userId);
+    // const authorName = user ? user.name : "Unknown Author";
+    // console.log("Author Name:", authorName);      
     });
   }, [slug, navigate]);
 
@@ -31,6 +36,11 @@ export default function Post() {
       }
     });
   };
+
+
+
+  
+
 
   if (!post) return null;
 
@@ -61,7 +71,7 @@ export default function Post() {
         {/* Post Title & Metadata */}
         <div className="max-w-4xl mx-auto mb-6 text-center">
           <h1 className="text-4xl font-extrabold text-black bg-white mb-2">{post.title}</h1>
-          <p className="text-black-600">By {userData.name || "Unknown"} | {new Date(post.$createdAt).toDateString()}</p>
+          <p className="text-black-600"> | {new Date(post.$createdAt).toDateString()} |</p>
           
         </div>
 
