@@ -10,15 +10,12 @@ function LogoutBtn() {
 
   const logoutHandler = () => {
     authService.logout().then(() => {
-      dispatch(logout())
-    })
-    
+      dispatch(logout());
+      navigate("/");
+    });
   }
 
-  useEffect(() => {
-    // Redirect to login page after logout
-    navigate("/login");
-  }, [logoutHandler]);
+  // Removed useEffect that caused navigation on every render
 
   return (
     <button

@@ -7,15 +7,16 @@ function Home() {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    appwriteService.getPosts().then((posts) => {
+    appwriteService.getPosts()
+    .then((posts) => {
       if (posts) {
         setPosts(posts.documents)
       }
     })
-  }, [])
+  }, [])  
 
   // --- If no posts (not logged in) ---
-  if (posts.length === 0) {
+  if (!posts || posts.length === 0) {
     return (
         <div className="w-full py-16 px-4 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
             <Container>
@@ -114,10 +115,8 @@ function Home() {
   }
 
   // --- If posts exist ---
- // --- Improved Latest Posts Section ---
 return (
 
-  <Suspense fallback={<div>Loading...</div>}>
       <section className="w-full py-16 px-4 bg-gradient-to-br from-purple-800 via-blue-600 to-indigo-600 text-white">
         <Container>
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 text-center">
@@ -136,10 +135,6 @@ return (
           </div>
         </Container>
       </section>
-  </Suspense>
-
-
-
 
 );
 

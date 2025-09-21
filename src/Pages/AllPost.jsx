@@ -36,7 +36,7 @@ function AllPost() {
         };
 
         fetchUserPosts();
-    }, []);
+    }, [navigate]);
 
     if (loading) {
         return <div className="py-8 text-center text-lg text-white">Loading posts...</div>;

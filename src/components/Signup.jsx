@@ -9,20 +9,25 @@ import { useForm } from 'react-hook-form'
 function Signup() {
   const navigate = useNavigate()
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
 
   const create = async (data) => {
     setError("")
+    setLoading(true)
     try {
       const account = await authService.createAccount(data)
       if (account) {
         const currentUser = await authService.getCurrentUser()
-        if (currentUser) dispatch(login(currentUser))
+        if (currentUser)
+           dispatch(login(currentUser));
         navigate("/")
       }
     } catch (error) {
-      setError(error?.message || "Something went wrong")
+      setError(error?.message || "Something went wrong ")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -40,11 +45,11 @@ function Signup() {
         <p className="mt-2 text-center text-base text-gray-400">
           Already have an account?&nbsp;
           <Link
-                      to="/login"
-                      className="font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                    >
-                      Sign In
-                    </Link>
+            to="/login"
+            className="font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
+          >
+            Sign In
+          </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
@@ -80,7 +85,14 @@ function Signup() {
                 },
               })}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full flex justify-center items-center"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="animate-spin h-5 w-5 mr-2 border-t-2 border-b-2 border-white rounded-full"></span>
+              )}
               Create Account
             </Button>
           </div>

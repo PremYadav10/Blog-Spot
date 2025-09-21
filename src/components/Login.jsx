@@ -9,11 +9,13 @@ import { useForm } from 'react-hook-form'
 function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const login = async (data) => {
     setError("")
+    setLoading(true)
     try {
       const session = await authService.login(data)
       if (session) {
@@ -22,13 +24,14 @@ function Login() {
         navigate("/")
       }
     } catch (error) {
-      setError(error.message)
+      setError(error?.message || "Failed to login. Please try again.")
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    //w-full  bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4
-    <div className="flex items-center justify-center ">
+    <div className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-lg bg-gray-900 text-gray-200 rounded-2xl p-8 border border-gray-700 shadow-xl">
         
         {/* Logo */}
@@ -62,28 +65,37 @@ function Login() {
               label="Email"
               placeholder="Enter your email"
               type="email"
+              autoComplete="email"
               {...register("email", {
-                required: true,
+                required: "Email is required",
                 validate: {
-                  matchPatern: (value) =>
+                  matchPattern: (value) =>
                     /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                     "Email address must be a valid address",
                 },
               })}
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
             <Input
               label="Password"
               type="password"
               placeholder="Enter your password"
-              {...register("password", { required: true })}
+              autoComplete="current-password"
+              {...register("password", { required: "Password is required" })}
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md transition duration-300"
+              disabled={loading}
+              className={`w-full py-2 px-4 rounded-lg shadow-md transition duration-300 ${
+                loading
+                  ? "bg-gray-600 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-500 text-white"
+              }`}
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
         </form>

@@ -19,7 +19,7 @@ function EditPost() {
         else{
             navigate('/')
         }
-    },[slug,navigate])
+    },[slug, navigate])
   return post ? (
     <div className='py-12 bg-gradient-to-br from-purple-800 via-blue-600 to-indigo-600'>
         <Container>
